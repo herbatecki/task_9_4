@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang='pl'>
+<head>
+    <meta charset="UTF-8">
+    <title>CD shelf create and view of list</title>
+    <style>
+        table, th, tr, td {border:1px solid black;}
+    </style>
+</head>
+<body>
+<h2>Lista płyt</h2>
+
+<table>
+    <thead>
+    <th>zespół</th>
+    <th>album</th>
+    <th>rok wydania</th>
+    <th>ocena</th>      
+    </thead>
+{% for compact in compacts %}
+  <tr>
+      <td><a href='/compacts/{{ loop.index }}'>{{ compact.band }}</a> </td>
+      <td>{{ compact.album }}</td>
+      <td>{{ compact.year }}</td>
+      <td>{{ compact.mark }}</td>
+  </tr>
+{% endfor %}
+</table>
+<div>
+    <h2> Dodaj nową płytę: </h2>
+     <form method="POST" action='/compacts/'>
+        {{ form.hidden_tag() }}
+        <table>
+            {% for field in form if field.widget.input_type != 'hidden' %}
+                <tr>
+                    <th>{{ field.label }} {% if field.flags.required %}*{% endif %}</th>
+                    <td>{{ field }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" value="Go"><p> *po dodaniu nowego albumu odśwież stronę, aby posortować po najwyższej ocenie</p>
+    </form>
+</div> 
+</body>
+</html>
